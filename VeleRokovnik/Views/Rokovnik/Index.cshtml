@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.Title = "Početna";
+}
+
+<div class="jumbotron harold">
+    <div class="row">
+        <div class="col-md-offset-6 col-md-6">
+            <h1>VeleRokovnik</h1>
+            <p>Jednostavni rokovnik za svakodnevne potrebe, besplatan za sve studente TVZ-a <abbr title="prvih 15 dana korištenja">*</abbr></p>          
+            <div class="row buttons">
+                <div class="col-md-12">
+                    @Html.ActionLink("Registriraj se", "Kreiranje", "Racun", null, new { @class = "pull-right btn btn-huge btn-primary" }) 
+                    @Html.ActionLink("Prijava", "Prijava", "Racun", null, new { @class = "pull-right btn btn-huge btn-primary" })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,226 @@
+﻿@using System.Security.Principal
+@{
+    ViewBag.Title = "Početna";
+}
+
+<div class="row" ng-controller="ObvezeController as ctrl">
+    <!-- modals -->
+    <div id="modal-show-obveza" class="modal fade">
+        <div class="modal-dialog">
+            >
+            <div class="modal-content">
+                <div class="modal-header">
+                    <i class="glyphicon glyphicon-fire hitno-icon" ng-class="ctrl.activeObveza.JeHitno ? 'fire-red' : 'fire-transparent'"></i>
+                    <h4>Pregled obveze</h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-responsive">
+                        <tr>
+                            <td>Naslov</td>
+                            <td>{{ ctrl.activeObveza.Naslov }}</td>
+                        </tr>
+                        <tr>
+                            <td>Opis</td>
+                            <td>{{ ctrl.activeObveza.Opis }}</td>
+                        </tr>
+                        <tr>
+                            <td>Datum</td>
+                            <td>{{ ctrl.activeObveza.Datum | date : 'dd.MM.yyyy' }}</td>
+                        </tr>
+                        <tr>
+                            <td>Vrsta</td>
+                            <td>{{ ctrl.activeObveza.VrstaObveze | vrstaobveze }}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="ctrl.dismissModals()">OK</button>
+                    <button type="button" class="btn btn-warning" ng-click="ctrl.shareObveza()">Podijeli ovu obvezu sa prijateljima</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-edit-obveza" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <i class="glyphicon glyphicon-fire hitno-icon" ng-class="ctrl.activeObveza.JeHitno ? 'fire-red' : 'fire-transparent'"></i>
+                    <h4>Uredi obvezu</h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <fieldset>
+                            <div class="form-group">
+                                <label for="Naslov">Naslov:</label>
+                                <input type="text" class="form-control" name="Naslov" ng-model="ctrl.activeObveza.Naslov" />
+                            </div>
+                            <div class="form-group">
+                                <label for="Opis">Opis:</label>
+                                <textarea class="form-control" name="Opis" ng-model="ctrl.activeObveza.Opis"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="Datum">Datum:</label>
+                                <div class="right-inner-addon">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                    <input type="text" class="form-control datepicker" name="Datum" datepicker ng-model="ctrl.activeObveza.Datum" />
+                                </div>
+                            </div>
+                            <div class="checkbox">
+                                <label for="JeHitno"><input name="JeHitno" type="checkbox" ng-model="ctrl.activeObveza.JeHitno" /> Hitno</label>
+                            </div>
+                            <div class="form-group">
+                                <label for="VrstaObveze">Vrsta obveze:</label>
+
+                                <div class="btn-group">
+                                    <button name="VrstaObveze" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                        {{ ctrl.activeObveza.VrstaObveze | vrstaobveze }} <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li ng-repeat="item in ctrl.vrsteObveze">
+                                            <a ng-click="ctrl.activeObveza.VrstaObveze = item.Value">{{ item.Text }}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning" ng-click="ctrl.dismissModals()">Odustani</button>
+                    <button type="button" class="btn btn-success" ng-click="ctrl.saveObveza()">Spremi</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="modal-share-obveza" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>Dijeljenje obveze</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Ne! Nesmiješ podijeliti ovu obvezu sa svojim prijateljima!
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning" ng-click="ctrl.dismissModals()">OK sorry neću više</button>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <div id="modal-deleted-obveza" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>Brisanje obveze</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Obveza je uspješno obrisana!
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" ng-click="ctrl.dismissModals()">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /modals -->
+
+    <div class="col-md-12">
+        <h1 class="super-title">Pozdrav, @User.GetClaim(GenericPrincipalExtensions.CustomOsobaClaims.OsobaIme)!</h1>
+        <h2 class="super-subtitle">Drago mi je što si opet ovdje! Ovo su tvoje obveze:</h2>
+        <div class="row">
+            <div class="col-md-9">
+                <h3>Današnje obveze:</h3>
+                <table class="table table-striped table-responsive table-hover">
+                    <tr>
+                        <th>Naslov</th>
+                        <th>Kratki opis</th>
+                        <th>Vrsta</th>
+                        <th colspan="2">Opcije</th>
+                    </tr>
+                    <tr ng-repeat="obveza in ctrl.obveze | bydate : ctrl.danas">
+                        <td><i ng-class="obveza.JeHitno ? 'fire-red' : 'fire-transparent'" class="text-right glyphicon glyphicon-fire"></i> <a ng-click="ctrl.showObveza(obveza.ObvezaId)">{{ obveza.Naslov }}</a></td>
+                        <td>{{ obveza.Opis | shorter : 40 }}</td>
+                        <td>{{ obveza.VrstaObveze | vrstaobveze }}</td>
+                        <td><i class="glyphicon glyphicon-edit" ng-click="ctrl.editObveza(obveza.ObvezaId)"></i></td>
+                        <td><i class="glyphicon glyphicon-remove" ng-click="ctrl.deleteObveza(obveza.ObvezaId)"></i></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-3">
+                <h3 class="add-obveza">
+                    <i class="glyphicon glyphicon-plus plus-btn"></i>
+                    <a href="#" ng-click="ctrl.newObveza()">Dodaj novu obvezu</a>
+                </h3>
+            </div>
+        </div>
+        <hr />
+
+        <div class="row">
+            <div class="col-md-9">
+                <h3>Pregled po datumu:</h3>
+                <div class="row">
+                    <div class="form-group col-xs-3">
+                        <div class="right-inner-addon">
+                            <input type="text" class="form-control datepicker" datepicker ng-model="ctrl.searchDate" />
+                            <i class="glyphicon glyphicon-calendar"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <table class="table table-striped table-responsive table-hover">
+                    <tr>
+                        <th>Naslov</th>
+                        <th>Kratki opis</th>
+                        <th>Datum</th>
+                        <th>Vrsta</th>
+                        <th colspan="2">Opcije</th>
+                    </tr>
+
+                    <tr ng-repeat="obveza in ctrl.obveze | bydate : ctrl.searchDate">
+                        <td><i ng-class="obveza.JeHitno ? 'fire-red' : 'fire-transparent'" class="text-right glyphicon glyphicon-fire"></i> <a ng-click="ctrl.showObveza(obveza.ObvezaId)">{{ obveza.Naslov }}</a></td>
+                        <td>{{ obveza.Opis | shorter : 40 }}</td>
+                        <td>{{ obveza.Datum | date : 'dd.MM.yyyy' }}</td>
+                        <td>{{ obveza.VrstaObveze | vrstaobveze }}</td>
+                        <td><i class="glyphicon glyphicon-edit" ng-click="ctrl.editObveza(obveza.ObvezaId)"></i></td>
+                        <td><i class="glyphicon glyphicon-remove" ng-click="ctrl.deleteObveza(obveza.ObvezaId)"></i></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="huge-spacer"></div>
+
+<input id="osobaId" type="hidden" name="osobaId" value="@User.OsobaId()" />
+
+@section styles
+{
+    @Styles.Render("~/Content/datepicker")
+}
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/datepicker")
+    <script>
+        $(function () {
+            $('.datepicker').datepicker({
+                format: 'dd.mm.yyyy',
+                autoclose: true,
+                weekStart: 1,
+                orientation: 'top',
+                language: 'hr'
+            });
+        });
+    </script>
+}

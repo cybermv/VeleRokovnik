@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<publishData>
+    <publishProfile
+      publishUrl="https://velenick-001-site1.smarterasp.net:8172/msdeploy.axd"
+      msdeploySite="velenick-001-site1"
+      destinationAppUrl="http://velenick-001-site1.smarterasp.net/"
+      profileName="Default Settings"
+      publishMethod="MSDeploy"
+      userName="ifc\velenick-001" />
+</publishData>

@@ -1,0 +1,70 @@
+﻿@model VeleRokovnik.Models.NoviKorisnikModel
+
+@{
+    Layout = "~/Views/Shared/_ModalLayout.cshtml";
+    ViewBag.Title = "Kreiranje računa";
+}
+
+@section styles
+{
+    @Styles.Render("~/Content/datepicker")
+}
+
+<div class="modal show modal-scrollable">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <p class="text-right">
+                    <a href="@Url.Action("Index","Rokovnik")"><i class="glyphicon glyphicon-arrow-left"></i> Povratak na početnu stranicu</a>
+                </p>
+                <h3>Kreiranje novog računa</h3>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("Kreiranje", "Racun", FormMethod.Post, new { id = "kreiranjeForm" }))
+                {
+                    @Html.DisplayErrors()
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Username)
+                        @Html.TextBoxFor(m => m.Username, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Ime)
+                        @Html.TextBoxFor(m => m.Ime, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Prezime)
+                        @Html.TextBoxFor(m => m.Prezime, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Password)
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.RepeatPassword)
+                        @Html.PasswordFor(m => m.RepeatPassword, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+
+                        @Html.LabelFor(m => m.DatumRodjenja)
+                        @Html.TextBoxFor(m => m.DatumRodjenja, new { @class = "form-control", id = "dobDatepicker" })
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Registracija!</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/datepicker")
+    <script>
+        $("#dobDatepicker").datepicker({
+            format: "dd.mm.yyyy",
+            autoclose: true,
+            clearBtn: true,
+            weekStart: 1
+        });
+    </script>
+}

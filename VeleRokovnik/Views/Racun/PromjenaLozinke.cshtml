@@ -1,0 +1,39 @@
+﻿@model VeleRokovnik.Models.PromjenaLozinkeModel
+
+@{
+    Layout = "~/Views/Shared/_ModalLayout.cshtml";
+    ViewBag.Title = "Promjena lozinke";
+}
+
+<div class="modal show">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <p class="text-right">
+                    <a href="@Url.Action("Index","Rokovnik")"><i class="glyphicon glyphicon-arrow-left"></i> Povratak na početnu stranicu</a>
+                </p>
+                <h3>Promjena lozinke</h3>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("PromjenaLozinke", "Racun", FormMethod.Post))
+                {
+                    @Html.DisplayErrors()
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.StaraLozinka)
+                        @Html.PasswordFor(m => m.StaraLozinka, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.NovaLozinka)
+                        @Html.PasswordFor(m => m.NovaLozinka, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.NovaLozinkaPonovno)
+                        @Html.PasswordFor(m => m.NovaLozinkaPonovno, new { @class = "form-control" })
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Promjeni!</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>

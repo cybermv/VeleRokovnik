@@ -1,0 +1,106 @@
+﻿/* Global font setting */
+div, p, h1, h2, h3, h4, h5, h6 {
+    font-family: "Georgia";
+}
+
+/* Global background setting */
+body {
+    background: url('Images/Patterns/notebook_@2X.png');
+}
+
+.plus-btn {
+    color: green;
+}
+
+.super-title {
+    font-size: 8em;
+    -webkit-font-variant-caps: titling-caps;
+    -moz-font-variant-caps: titling-caps;
+    -ms-font-variant-caps: titling-caps;
+    -o-font-variant-caps: titling-caps;
+    font-variant-caps: titling-caps;
+}
+
+.super-subtitle {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.add-obveza {
+    margin-top: 56px;
+}
+
+.modal textarea {
+    -moz-resize: vertical;
+    -ms-resize: vertical;
+    -o-resize: vertical;
+    resize: vertical;
+}
+
+.modal-scrollable .modal-body {
+    max-height: 420px;
+    overflow-y: auto;
+}
+
+table {
+    background: #FFF;
+}
+
+.huge-spacer {
+    padding: 80px;
+}
+
+.fire-red {
+    color: red;
+}
+
+.fire-transparent {
+    color: transparent;
+}
+
+.hitno-icon {
+    font-size: 3.5em;
+    float: right;
+}
+
+.right-inner-addon {
+    position: relative;
+}
+
+.right-inner-addon input {
+    padding-right: 30px;    
+}
+
+.right-inner-addon i {
+    position: absolute;
+    right: 0;
+    padding: 10px 12px;
+    pointer-events: none;
+}
+
+.harold {
+    background: url('Images/harold.jpg') top center;
+    width: 100%;
+    height: auto;
+}
+
+.harold h1 {
+    font-size: 6em;
+}
+
+.harold p:first-of-type {
+    font-size: 1.7em;
+}
+
+.harold .buttons {
+    margin-top: 150px;
+}
+
+.btn-huge {
+    padding: 12px 18px;
+    margin: 0 5px;
+    font-size: 20px;
+    line-height: 1.33;
+    -ms-border-radius: 6px;
+    border-radius: 6px;
+}

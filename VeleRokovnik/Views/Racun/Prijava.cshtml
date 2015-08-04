@@ -1,0 +1,35 @@
+﻿@model VeleRokovnik.Models.PrijavaModel
+@{
+    Layout = "~/Views/Shared/_ModalLayout.cshtml";
+    ViewBag.Title = "Prijava";
+}
+
+<div class="modal show">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Prijava u VeleRokovnik</h3>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("Prijava", "Racun", new { ViewBag.ReturnUrl }, FormMethod.Post, new { id = "loginForm" }))
+                {
+                    @Html.DisplayErrors()
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Username)
+                        @Html.TextBoxFor(m => m.Username, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Password)
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                    </div>
+                    <button type="submit" class="btn btn-primary">Prijava!</button>
+                    <p class="text-muted text-right">
+                        Još nemaš račun? Kreiraj ga <a href="@Url.Action("Kreiranje")">ovdje</a>!
+                        <br />
+                        Ako si zaboravio lozinku, klikni <a href="@Url.Action("ResetLozinke")">ovdje</a>.
+                    </p>
+                }
+            </div>
+        </div>
+    </div>
+</div>
